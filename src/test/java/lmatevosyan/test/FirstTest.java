@@ -2,11 +2,11 @@ package lmatevosyan.test;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import java.util.concurrent.TimeUnit;
 
 public class FirstTest {
     private WebDriver driver;
@@ -23,21 +23,31 @@ public class FirstTest {
 
         driver.get("https://www.ozon.ru/");
 
-       driver.findElement(By.className("c0f0")).sendKeys("На западном фронте без перемен");
+        driver.findElement(By.name("search")).sendKeys("На западном фронте без перемен");
+        driver.findElement(By.xpath("//form[@class='c1b8']//button[@class='ui-a9 ui-h4']")).click();
 
-       driver.findElement(By.className("c0f5")).click();
-       driver.switchTo().newWindow(WindowType.TAB);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-       //driver.findElement(By.xpath("//div[@class='a3f4']/a[@href='/context/detail/id/31229255/']")).click();
+        driver.findElement(By.xpath("//div[@class='a7i0']//button[@class='ui-a9']")).click();
+        driver.findElement(By.className("c1c1")).click();
 
+        driver.findElement(By.name("search")).sendKeys("На обратном пути");
+        driver.findElement(By.xpath("//form[@class='c1b8']//button[@class='ui-a9 ui-h4']")).click();
+
+        driver.navigate().refresh();
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+        driver.findElement(By.xpath("//div[@class='a7i0']//button[@class='ui-a9']")).click();
+        driver.findElement(By.xpath("//a[@href='/cart']")).click();
 
     }
 
-    @AfterClass
+   /*@AfterClass
     public void tearDown() {
 
         driver.quit();
 
-    }
+    }*/
 
 }
