@@ -1,11 +1,15 @@
 package lmatevosyan.test;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
 import static org.openqa.selenium.By.className;
 
 public class FirstTest extends WebDriverSetUp {
@@ -15,7 +19,7 @@ public class FirstTest extends WebDriverSetUp {
     public void testBusketCost() {
 
         gotoOzonPage();
-
+        checkUrl(driver.getCurrentUrl(), "https://www.ozon.ru/");
         //chooseTwoBooks();
 
         //Поиск товара
@@ -25,25 +29,26 @@ public class FirstTest extends WebDriverSetUp {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         Random rand = new Random();
-        while(sum < 1500) {
+        while (sum < 1500) {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             //Поиск всех кнопок "В корзину" из списка найденных товаров
             String allProductsButtonXpath = "//div/div/div[1]/div[3]/div/div/button";
             //Создание списка веб-элементов
-            List <WebElement> allProducts = driver.findElements(By.xpath(allProductsButtonXpath));
+            List<WebElement> allProducts = driver.findElements(By.xpath(allProductsButtonXpath));
             //вывод произвольного номера товара
             System.out.println(rand.nextInt(allProducts.size()));
             //нажатие кнопки "В корзину" для выбранного товара
             try {
                 new Actions(driver).moveToElement(allProducts.get(rand.nextInt(allProducts.size()))).perform();
                 allProducts.get(rand.nextInt(allProducts.size())).click();
-            } catch (ElementClickInterceptedException e){
+            } catch (ElementClickInterceptedException e) {
                 driver.findElement(By.xpath("//*[@id=\"__nuxt\"]/div/div[3]/div/button")).click();
                 new Actions(driver).moveToElement(allProducts.get(rand.nextInt(allProducts.size()))).perform();
                 allProducts.get(rand.nextInt(allProducts.size())).click();
             }
 
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 
             //Переход в корзину
             driver.findElement(By.xpath("//a[@href='/cart']")).click();
@@ -53,20 +58,19 @@ public class FirstTest extends WebDriverSetUp {
             char[] newPriceArr = new char[priceArr.length - 2];
             for (int i = 0; i < priceArr.length - 2; i++) {
 
-                        newPriceArr[i] = priceArr[i];
+                newPriceArr[i] = priceArr[i];
             }
-            if(newPriceArr.length>3) {
+            if (newPriceArr.length > 3) {
                 String newString = String.valueOf(newPriceArr);
                 String[] newStringArr = newString.split(" ");
                 String sumString = newStringArr[0] + newStringArr[1];
                 sum = Integer.parseInt(sumString);
-            }
-            else {
+            } else {
                 sum = Integer.parseInt(String.valueOf(newPriceArr));
             }
 
             System.out.println(sum);
-            if(sum<1500) {
+            if (sum < 1500) {
                 driver.navigate().back();
                 try {
                     Thread.sleep(2000);
@@ -78,14 +82,17 @@ public class FirstTest extends WebDriverSetUp {
 
     }
 
-   // @Step
     public void gotoOzonPage() {
 
         //Переход на Озон
         driver.get("https://www.ozon.ru/");
+
     }
 
-
+    @Step
+    public void checkUrl(String str1, String str2) {
+        Assert.assertEquals(str1, str2);
+    }
 
 
     private void chooseTwoBooks() {
