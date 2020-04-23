@@ -1,5 +1,6 @@
 package lmatevosyan.test;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -7,6 +8,8 @@ import org.openqa.selenium.io.FileHandler;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,8 +24,8 @@ public class FirstTest extends WebDriverSetUp {
     protected static int sum = 0;
 
     @Test
+    @Description(value = "Выполняется добавление произвольных товаров интернет-магазина в корзину. Тест останавливается, если общая сумма покупки в корзине > 1500")
     public void testBusketCost() {
-
         gotoOzonPage();
         checkUrl(driver.getCurrentUrl(), "https://www.ozon.ru/");
         //chooseTwoBooks();
@@ -45,18 +48,20 @@ public class FirstTest extends WebDriverSetUp {
             clickOnRandomElementButton(randomProduct);
             waitForPage();
             gotoCart();
-            //WebDriverWait wait = (new WebDriverWait(driver, 10));
-            //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), 'Общая стоимость')]/following::span[1]")));
             waitForPage();
+            //Ожидание появления цены на странице
             sum = getCartPrice();
         }
 
+        pageDown();
+        //Скриншот страницы
         makeScreenshot();
 
     }
 
     //Переход на Озон
     private void gotoOzonPage() {
+
         driver.get("https://www.ozon.ru/");
     }
 
@@ -69,6 +74,18 @@ public class FirstTest extends WebDriverSetUp {
     private void enterSearchCriteria(String searchedProductName) {
         driver.findElement(By.name("search")).sendKeys(searchedProductName);
     }
+    private void pageDown (){
+
+        Robot rob = null;
+        try {
+            rob = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+        if (rob != null) {
+            rob.keyPress(KeyEvent.VK_PAGE_DOWN);
+        }
+    }
 
     //Поиск товара
     private void searchProduct() {
@@ -78,9 +95,8 @@ public class FirstTest extends WebDriverSetUp {
     private List<WebElement> getAllProducts() {
         //Поиск всех кнопок "В корзину" из списка найденных товаров
         String allProductsButtonXpath = "//div/div/div[1]/div[3]/div/div/button";
-        //Создание списка веб-элементов
-        List<WebElement> allProducts = driver.findElements(By.xpath(allProductsButtonXpath));
-        return allProducts;
+        //Возвращает список веб-элементов
+        return driver.findElements(By.xpath(allProductsButtonXpath));
     }
 
     private void clickOnRandomElementButton(WebElement randomProduct) {
@@ -96,11 +112,13 @@ public class FirstTest extends WebDriverSetUp {
 
     //Переход в корзину
     private void gotoCart() {
+
         driver.findElement(By.xpath("//a[@href='/cart']")).click();
     }
 
     //Ожидание загрузки страницы
     private void waitForPage() {
+
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -108,9 +126,8 @@ public class FirstTest extends WebDriverSetUp {
     private int getCartPrice() {
         char[] priceArr = driver.findElement(By.xpath("//span[contains(text(), 'Общая стоимость')]/following::span[1]")).getText().toCharArray();
         char[] newPriceArr = new char[priceArr.length - 2];
-        for (int i = 0; i < priceArr.length - 2; i++) {
-
-            newPriceArr[i] = priceArr[i];
+        if (priceArr.length - 2 >= 0) {
+            System.arraycopy(priceArr, 0, newPriceArr, 0, priceArr.length - 2);
         }
         if (newPriceArr.length > 3) {
             String newString = String.valueOf(newPriceArr);

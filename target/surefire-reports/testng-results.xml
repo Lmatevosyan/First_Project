@@ -2,20 +2,20 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-04-16T11:03:01 MSK" name="Surefire suite" finished-at="2020-04-16T11:03:42 MSK" duration-ms="40759">
+  <suite started-at="2020-04-23T14:35:56 MSK" name="Surefire suite" finished-at="2020-04-23T14:36:50 MSK" duration-ms="54359">
     <groups>
     </groups>
-    <test started-at="2020-04-16T11:03:01 MSK" name="Surefire test" finished-at="2020-04-16T11:03:42 MSK" duration-ms="40759">
+    <test started-at="2020-04-23T14:35:56 MSK" name="Surefire test" finished-at="2020-04-23T14:36:50 MSK" duration-ms="54359">
       <class name="lmatevosyan.test.FirstTest">
-        <test-method is-config="true" signature="setUp()[pri:0, instance:lmatevosyan.test.FirstTest@2d691f3d]" started-at="2020-04-16T11:03:01 MSK" name="setUp" finished-at="2020-04-16T11:03:12 MSK" duration-ms="10909" status="PASS">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:lmatevosyan.test.FirstTest@6dd93a21]" started-at="2020-04-23T14:35:56 MSK" name="setUp" finished-at="2020-04-23T14:36:07 MSK" duration-ms="10619" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method signature="testBusketCost()[pri:0, instance:lmatevosyan.test.FirstTest@2d691f3d]" started-at="2020-04-16T11:03:12 MSK" name="testBusketCost" finished-at="2020-04-16T11:03:42 MSK" duration-ms="29592" status="PASS">
+        <test-method signature="testBusketCost()[pri:0, instance:lmatevosyan.test.FirstTest@6dd93a21]" started-at="2020-04-23T14:36:07 MSK" name="testBusketCost" finished-at="2020-04-23T14:36:50 MSK" duration-ms="43518" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testBusketCost -->
-        <test-method is-config="true" signature="quit()[pri:0, instance:lmatevosyan.test.FirstTest@2d691f3d]" started-at="2020-04-16T11:03:42 MSK" name="quit" finished-at="2020-04-16T11:03:42 MSK" duration-ms="2" status="PASS">
+        <test-method is-config="true" signature="quit()[pri:0, instance:lmatevosyan.test.FirstTest@6dd93a21]" started-at="2020-04-23T14:36:50 MSK" name="quit" finished-at="2020-04-23T14:36:50 MSK" duration-ms="3" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- quit -->
